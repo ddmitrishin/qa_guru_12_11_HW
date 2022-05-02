@@ -50,7 +50,7 @@ public class TestBase {
     static void setUp() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
-        Configuration.baseUrl = System.getProperty("baseDemoUrl");
+        Configuration.baseUrl = urlParameterForJenkins;
         Configuration.browserSize = browserSizeParameterForJenkins;
         Configuration.remote = "https://" + config.login() + ":" + config.password() + "@" + selenoidUrlParameterForJenkins;
 
