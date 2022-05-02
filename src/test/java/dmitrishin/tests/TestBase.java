@@ -2,10 +2,12 @@ package dmitrishin.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import dmitrishin.config.CredentialsConfig;
 import dmitrishin.data.GenerateData;
 import dmitrishin.helpers.Attach;
 import dmitrishin.pages.RegistrationFormPage;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -16,6 +18,7 @@ import static java.lang.String.format;
 public class TestBase {
     RegistrationFormPage registrationFormPage = new RegistrationFormPage();
     GenerateData generate = new GenerateData();
+    static CredentialsConfig config = ConfigFactory.create(CredentialsConfig.class);
 
     //Input parameters
     String firstName = generate.firstname;
@@ -39,13 +42,17 @@ public class TestBase {
     String fileName = imagePath.substring(4);
     String stateAndCity = format("%s %s", state, city);
 
+    static String urlParameterForJenkins = System.getProperty("baseDemoUrl");
+    static String browserSizeParameterForJenkins = System.getProperty("browserSize");
+    static String selenoidUrlParameterForJenkins = System.getProperty("selenoidServer");
+
     @BeforeAll
     static void setUp() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+        Configuration.baseUrl = urlParameterForJenkins;
+        Configuration.browserSize = browserSizeParameterForJenkins;
+        Configuration.remote = "https://" + config.login() + ":" + config.password() + "@" + selenoidUrlParameterForJenkins;
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
