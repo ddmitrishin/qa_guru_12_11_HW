@@ -42,17 +42,17 @@ public class TestBase {
     String fileName = imagePath.substring(4);
     String stateAndCity = format("%s %s", state, city);
 
-    static String urlParameterForJenkins = System.getProperty("baseDemoUrl");
-    static String browserSizeParameterForJenkins = System.getProperty("browserSize");
-    static String selenoidUrlParameterForJenkins = System.getProperty("selenoidServer");
+//    static String urlParameterForJenkins = System.getProperty("baseDemoUrl");
+//    static String browserSizeParameterForJenkins = System.getProperty("browserSize");
+//    static String selenoidUrlParameterForJenkins = System.getProperty("selenoidServer");
 
     @BeforeAll
     static void setUp() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
-        Configuration.baseUrl = urlParameterForJenkins;
-        Configuration.browserSize = browserSizeParameterForJenkins;
-        Configuration.remote = "https://" + config.login() + ":" + config.password() + "@" + selenoidUrlParameterForJenkins;
+        Configuration.baseUrl = System.getProperty("baseDemoUrl");
+        Configuration.browserSize = System.getProperty("browserSize");
+        Configuration.remote = "https://" + config.login() + ":" + config.password() + "@" + System.getProperty("selenoidServer");
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
