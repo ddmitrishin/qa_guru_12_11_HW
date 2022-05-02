@@ -42,9 +42,9 @@ public class TestBase {
     String fileName = imagePath.substring(4);
     String stateAndCity = format("%s %s", state, city);
 
-    static String urlParameterForJenkins = System.getProperty("baseDemoUrl","https://demoqa1.com");
-    static String browserSizeParameterForJenkins = System.getProperty("browserSize", "1920x1080");
-    static String selenoidUrlParameterForJenkins = System.getProperty("selenoidServer", "selenoid.autotests.cloud/wd/hub");
+    static String urlParameterForJenkins = System.getProperty("baseDemoUrl");
+    static String browserSizeParameterForJenkins = System.getProperty("browserSize");
+    static String selenoidUrlParameterForJenkins = System.getProperty("selenoidServer");
 
     @BeforeAll
     static void setUp() {
